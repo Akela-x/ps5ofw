@@ -443,6 +443,35 @@ body.dark .mirror-btn.active {
   box-shadow: 0 0 0 1px rgba(59,130,246,.3), 0 2px 12px rgba(59,130,246,.2);
 }
 
+/* Pagination */
+.pagination {
+  display: flex; align-items: center; justify-content: center;
+  gap: 6px; padding: 16px 0 4px; flex-wrap: wrap;
+}
+.pagination:empty { display: none; }
+.pg-btn {
+  min-width: 36px; height: 36px; padding: 0 10px;
+  border-radius: 8px; border: 1.5px solid var(--border);
+  background: var(--card); color: var(--muted);
+  font-size: 13px; font-weight: 500; cursor: pointer;
+  transition: all .2s; display: inline-flex; align-items: center; justify-content: center;
+}
+.pg-btn:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+.pg-btn.active {
+  background: var(--accent); color: #fff;
+  border-color: var(--accent);
+  box-shadow: 0 2px 8px rgba(59,130,246,.3);
+}
+body.dark .pg-btn.active {
+  background: linear-gradient(135deg, #1d3461 0%, #1e3a8a 100%);
+  color: #93c5fd; border-color: rgba(59,130,246,.5);
+}
+.pg-btn:disabled { opacity: .35; cursor: default; }
+.pg-info {
+  font-size: 12px; color: var(--muted);
+  padding: 0 6px; white-space: nowrap;
+}
+
 /* Footer */
 .footer {
   font-size: 12px; color: var(--muted);
@@ -620,11 +649,13 @@ body.dark .mirror-btn.active {
     </div>
 
     <div id="cardView" class="card-view"></div>
-    <div class="empty-state" id="emptyState">
+    <div class="empty-state" id="emptyState" style="display:none">
       <div class="empty-icon">🔍</div>
       <p>Ничего не найдено по запросу <span class="empty-q" id="emptyQ"></span></p>
       <p style="font-size:12px">Попробуйте номер версии или часть SHA256 хеша</p>
     </div>
+
+    <div class="pagination" id="pagination"></div>
 
     <div class="footer">
       <p><a href="https://4pda.to/forum/index.php?showtopic=1055759&view=findpost&p=140958830" target="_blank" rel="noopener">Инструкция по обновлению прошивки PS5</a></p>
@@ -733,8 +764,10 @@ const recoveryFirmwares = [
 
 // ===== State =====
 let currentTab = "system";
-let sortDesc = false; // false = старые внизу (по возрастанию), true = новые внизу (по убыванию)
-const NEW_COUNT = 5; // последние N версий считаются "новыми"
+let sortDesc = false;
+const NEW_COUNT = 5;
+const PAGE_SIZE = 10;
+const currentPage = { system: 1, recovery: 1 };
 
 // Группировка по мажорной версии
 function getMajor(fw) {
@@ -767,15 +800,12 @@ function renderCurrentView() {
     f.original.toLowerCase().includes(q)
   );
 
-  // Sort: sortDesc=true → новые сверху (reverse), false → старые сверху (default)
   if (sortDesc) filtered = [...filtered].reverse();
 
   // Update tab counts
   const totalSys = systemFirmwares.length;
   const totalRec = recoveryFirmwares.length;
-  const curTotal = list.length;
   const showCount = filtered.length;
-
   if (currentTab === 'system') {
     document.getElementById('cntSystem').textContent = q ? `${showCount}/${totalSys}` : totalSys;
     document.getElementById('cntRecovery').textContent = totalRec;
@@ -789,27 +819,32 @@ function renderCurrentView() {
     cardView.innerHTML = '';
     emptyQ.textContent = `"${q}"`;
     emptyState.style.display = 'block';
+    renderPagination(0, 0);
     return;
   }
   emptyState.style.display = 'none';
 
-  // Build HTML with group separators (only when no active search)
+  // Pagination slice
+  const tabKey = currentTab === 'system' ? 'system' : 'recovery';
+  const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
+  if (currentPage[tabKey] > totalPages) currentPage[tabKey] = totalPages;
+  const page = currentPage[tabKey];
+  const start = (page - 1) * PAGE_SIZE;
+  const pageItems = filtered.slice(start, start + PAGE_SIZE);
+
+  // Build HTML
   const totalLen = list.length;
   let html = '';
   let lastMajor = null;
 
-  filtered.forEach((fw, i) => {
-    // Original index in unsorted list (for NEW badge)
+  pageItems.forEach((fw, i) => {
     const origIdx = list.indexOf(fw);
     const isNew = origIdx >= totalLen - NEW_COUNT;
-
     const major = getMajor(fw);
     if (!q && major !== lastMajor) {
       html += `<div class="group-sep">Версия ${major}.xx</div>`;
       lastMajor = major;
     }
-
-    // Animation delay stagger
     const delay = Math.min(i * 30, 300);
     html += `<div class="card" style="animation-delay:${delay}ms">
       ${isNew ? '<span class="badge-new">Новое</span>' : ''}
@@ -830,6 +865,47 @@ function renderCurrentView() {
   });
 
   cardView.innerHTML = html;
+  renderPagination(page, totalPages);
+}
+
+function renderPagination(page, totalPages) {
+  const pg = document.getElementById('pagination');
+  if (totalPages <= 1) { pg.innerHTML = ''; return; }
+
+  const tabKey = currentTab === 'system' ? 'system' : 'recovery';
+  let html = '';
+
+  // Prev arrow
+  html += `<button class="pg-btn" onclick="goPage('${tabKey}',${page - 1})" ${page === 1 ? 'disabled' : ''}>‹</button>`;
+
+  // Page numbers with ellipsis
+  const pages = [];
+  for (let i = 1; i <= totalPages; i++) {
+    if (i === 1 || i === totalPages || (i >= page - 1 && i <= page + 1)) {
+      pages.push(i);
+    } else if (pages[pages.length - 1] !== '…') {
+      pages.push('…');
+    }
+  }
+
+  pages.forEach(p => {
+    if (p === '…') {
+      html += `<span class="pg-info">…</span>`;
+    } else {
+      html += `<button class="pg-btn${p === page ? ' active' : ''}" onclick="goPage('${tabKey}',${p})">${p}</button>`;
+    }
+  });
+
+  // Next arrow
+  html += `<button class="pg-btn" onclick="goPage('${tabKey}',${page + 1})" ${page === totalPages ? 'disabled' : ''}>›</button>`;
+
+  pg.innerHTML = html;
+}
+
+function goPage(tabKey, page) {
+  currentPage[tabKey] = page;
+  renderCurrentView();
+  document.getElementById('mainContainer').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 // ===== Download segmented control =====
@@ -866,11 +942,13 @@ function copyHash(idx, tab, btn) {
 function onSearch() {
   const val = document.getElementById('search').value;
   document.getElementById('searchClear').classList.toggle('visible', val.length > 0);
+  currentPage[currentTab === 'system' ? 'system' : 'recovery'] = 1;
   renderCurrentView();
 }
 function clearSearch() {
   document.getElementById('search').value = '';
   document.getElementById('searchClear').classList.remove('visible');
+  currentPage[currentTab === 'system' ? 'system' : 'recovery'] = 1;
   renderCurrentView();
   document.getElementById('search').focus();
 }
