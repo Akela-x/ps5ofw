@@ -860,14 +860,14 @@ function renderCurrentView() {
     html += `<div class="card" style="animation-delay:${delay}ms">
       ${isNew ? '<span class="badge-new">Новое</span>' : ''}
       <div class="file"><span class="file-tag">FW</span><span class="file-ver">${fw.file.replace(/^Прошивка\s*/i,'')}</span></div>
-      <div class="hash-label">SHA256 хеш:</div>
+      <div class="hash-label">SHA256</div>
       <div class="hash-row">
         <div class="hash-wrap">
           <div class="hash" id="hash-${origIdx}-${currentTab}">${fw.sha}</div>
         </div>
         <button class="copy-btn" onclick="copyHash(${origIdx},'${currentTab}',this)" title="Скопировать хеш">⧉</button>
       </div>
-      <div class="size">Размер: ${fw.size}</div>
+      <div class="size">${fw.size}</div>
       <div class="btn-group">
         <a class="download-btn active" href="${fw.link}" target="_blank" rel="noopener" onclick="setActiveBtn(this)">↓ Скачать</a>
         <a class="mirror-btn" href="${fw.mirror}" target="_blank" rel="noopener" onclick="setActiveBtn(this)">⇄ Зеркало</a>
