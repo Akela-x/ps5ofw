@@ -854,12 +854,12 @@ function renderCurrentView() {
         <div class="hash-wrap">
           <div class="hash" id="hash-${origIdx}-${currentTab}">${fw.sha}</div>
         </div>
-        <button class="copy-btn" onclick="copyHash(${origIdx},'${currentTab}',this)" title="Скопировать хеш">📋</button>
+        <button class="copy-btn" onclick="copyHash(${origIdx},'${currentTab}',this)" title="Скопировать хеш">⧉</button>
       </div>
       <div class="size">Размер: ${fw.size}</div>
       <div class="btn-group">
-        <a class="download-btn active" href="${fw.link}" target="_blank" rel="noopener" onclick="setActiveBtn(this)">📥 Скачать</a>
-        <a class="mirror-btn" href="${fw.mirror}" target="_blank" rel="noopener" onclick="setActiveBtn(this)">🪞 Зеркало</a>
+        <a class="download-btn active" href="${fw.link}" target="_blank" rel="noopener" onclick="setActiveBtn(this)">↓ Скачать</a>
+        <a class="mirror-btn" href="${fw.mirror}" target="_blank" rel="noopener" onclick="setActiveBtn(this)">⇄ Зеркало</a>
       </div>
     </div>`;
   });
@@ -922,7 +922,7 @@ function copyHash(idx, tab, btn) {
   navigator.clipboard.writeText(sha).then(() => {
     btn.textContent = '✓';
     btn.classList.add('copied');
-    setTimeout(() => { btn.textContent = '📋'; btn.classList.remove('copied'); }, 1500);
+    setTimeout(() => { btn.textContent = '⧉'; btn.classList.remove('copied'); }, 1500);
   }).catch(() => {
     // Fallback for older browsers
     const el = document.getElementById(`hash-${idx}-${tab}`);
@@ -934,7 +934,7 @@ function copyHash(idx, tab, btn) {
     window.getSelection().removeAllRanges();
     btn.textContent = '✓';
     btn.classList.add('copied');
-    setTimeout(() => { btn.textContent = '📋'; btn.classList.remove('copied'); }, 1500);
+    setTimeout(() => { btn.textContent = '⧉'; btn.classList.remove('copied'); }, 1500);
   });
 }
 
