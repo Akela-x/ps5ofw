@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Архив прошивок Sony PlayStation 5</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+:root {
+  --bg: #f0f2f7;
+  --card: #ffffff;
+  --muted: #6b7280;
+  --accent: #0b57d0;
+  --accent-hover: #0944a8;
+  --border: #e2e6ee;
+  --radius: 12px;
+  --max-width: 1100px;
+  --logo-bg: linear-gradient(135deg, #003791 0%, #0b57d0 100%);
+  --logo-color: #ffffff;
+  --group-label: #9ca3af;
+  --hash-bg: rgba(0,0,0,0.04);
+  --btn-dl-bg: #1e293b;
+  --btn-dl-color: #cbd5e1;
+  --btn-dl-hover: #334155;
+  --btn-mir-bg: #3a2a5f;
+  --btn-mir-color: #c4b5fd;
+  --btn-mir-hover: #4c3d7a;
+  --copy-bg: rgba(0,0,0,0.06);
+  --new-bg: #16a34a;
+  --new-color: #fff;
+}
+
+body.dark {
+  --bg: #0a0a0a;
+  --card: #111111;
+  --muted: #9ca3af;
+  --accent: #3b82f6;
+  --accent-hover: #2563eb;
+  --border: #2a2a2a;
+  --logo-bg: linear-gradient(135deg, #1d4ed8 0%, #3b82f6 100%);
+  --group-label: #555;
+  --hash-bg: rgba(255,255,255,0.05);
+  --btn-dl-bg: #1e293b;
+  --btn-dl-color: #94a3b8;
+  --btn-dl-hover: #334155;
+  --btn-mir-bg: #3b1f6e;
+  --btn-mir-color: #c4b5fd;
+  --btn-mir-hover: #4c2d8a;
+  --copy-bg: rgba(255,255,255,0.07);
+  --new-bg: #15803d;
+  --new-color: #d1fae5;
+  color: #f1f5f9;
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+
+body {
+  font-family: Inter, "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg);
+  color: #0f1724;
+  margin: 0;
+  padding: 16px;
+  display: flex;
+  justify-content: center;
+  -webkit-font-smoothing: antialiased;
+  transition: background .25s, color .25s;
+}
+body.dark { color: #f1f5f9; }
+
+.wrapper { width: 100%; max-width: var(--max-width); }
+
+/* ===== Banner ===== */
+.banner {
+  position: relative; overflow: hidden;
+  border-radius: 16px; margin-bottom: 14px;
+  padding: 22px 24px 20px;
+  background: linear-gradient(120deg, #003791 0%, #0b57d0 55%, #1e3a8a 100%);
+  box-shadow: 0 8px 28px rgba(0,55,145,.35);
+  transition: background .3s, box-shadow .3s;
+}
+/* light theme: soft blue-white */
+.banner::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 70% 50%, rgba(255,255,255,.18) 0%, transparent 65%);
+  pointer-events: none;
+}
+/* decorative PS-logo watermark */
+.banner::after {
+  content: 'PS';
+  position: absolute; right: -10px; top: 50%;
+  transform: translateY(-50%);
+  font-size: 120px; font-weight: 900; letter-spacing: -6px;
+  color: rgba(255,255,255,.06);
+  pointer-events: none; user-select: none;
+  line-height: 1;
+}
+.banner-inner {
+  position: relative; z-index: 1;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 16px;
+}
+.banner-text {}
+.banner h1 {
+  margin: 0 0 6px; line-height: 1.15;
+  display: flex; align-items: center; gap: 0; flex-wrap: wrap;
+}
+/* единый пузырь */
+.title-pill {
+  display: inline-flex; flex-direction: column; align-items: center;
+  background: rgba(255,255,255,.15);
+  border: 1px solid rgba(255,255,255,.3);
+  border-radius: 18px;
+  backdrop-filter: blur(6px);
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0,0,0,.15);
+}
+.title-pill-top {
+  display: flex; align-items: center; justify-content: center;
+}
+.title-pill-main {
+  font-size: 15px; font-weight: 700; letter-spacing: .07em;
+  color: rgba(255,255,255,.9); padding: 10px 16px;
+  white-space: nowrap;
+}
+.title-pill-sep {
+  width: 1px; align-self: stretch;
+  background: rgba(255,255,255,.25);
+}
+.title-pill-tag {
+  font-size: 12px; font-weight: 700; letter-spacing: .07em;
+  color: rgba(255,255,255,.9); padding: 10px 14px;
+  white-space: nowrap;
+}
+.title-pill-divider {
+  height: 1px; background: rgba(255,255,255,.2);
+  width: 100%; margin: 0;
+}
+.title-pill-sub {
+  font-size: 12px; color: rgba(255,255,255,.72);
+  padding: 7px 16px; font-weight: 400; line-height: 1.4;
+  text-align: center;
+}
+body.dark .title-pill {
+  background: rgba(59,130,246,.18);
+  border-color: rgba(59,130,246,.4);
+  box-shadow: 0 2px 16px rgba(59,130,246,.2);
+}
+body.dark .title-pill-sep { background: rgba(59,130,246,.3); }
+body.dark .title-pill-tag { color: #93c5fd; }
+body.dark .title-pill-main { color: #93c5fd; }
+body.dark .title-pill-divider { background: rgba(59,130,246,.25); }
+body.dark .title-pill-sub { color: rgba(148,163,184,.8); }
+
+/* Banner stats */
+.banner-stats {
+  display: flex;
+  gap: 20px; flex-shrink: 0;
+}
+.stat-item {
+  text-align: center; color: rgba(255,255,255,.85);
+}
+.stat-num {
+  font-size: 26px; font-weight: 800; color: #fff; line-height: 1;
+  display: block;
+}
+.stat-lbl {
+  font-size: 11px; color: rgba(255,255,255,.6); letter-spacing: .04em;
+  text-transform: uppercase; margin-top: 2px; display: block;
+}
+.stat-sep {
+  width: 1px; background: rgba(255,255,255,.18); align-self: stretch;
+  margin: 4px 0;
+}
+
+/* Dark theme banner */
+body.dark .banner {
+  background: linear-gradient(120deg, #0a0a1a 0%, #0f172a 50%, #0a0a1a 100%);
+  box-shadow: 0 0 0 1px rgba(59,130,246,.2), 0 8px 32px rgba(0,0,0,.6), 0 0 60px rgba(59,130,246,.12);
+}
+body.dark .banner::before {
+  background: radial-gradient(ellipse at 30% 50%, rgba(59,130,246,.18) 0%, transparent 65%),
+              radial-gradient(ellipse at 80% 30%, rgba(139,92,246,.12) 0%, transparent 55%);
+}
+body.dark .banner::after {
+  color: rgba(59,130,246,.08);
+  text-shadow: 0 0 80px rgba(59,130,246,.3);
+}
+body.dark .banner h1 { color: #f1f5f9; }
+body.dark .version-tag {
+  background: rgba(59,130,246,.25);
+  border-color: rgba(59,130,246,.5);
+  color: #93c5fd;
+}
+body.dark .banner .subtitle { color: rgba(148,163,184,.8); }
+body.dark .banner .subtitle a { color: #60a5fa; }
+body.dark .stat-num { color: #e2e8f0; }
+body.dark .stat-sep { background: rgba(59,130,246,.2); }
+
+/* PC mode: show stats, wider banner */
+.pc-mode .banner-stats { display: flex; }
+.pc-mode .banner { padding: 26px 32px 24px; }
+.pc-mode .banner h1 { font-size: 26px; }
+.pc-mode .banner::after { font-size: 160px; right: 100px; }
+
+@keyframes bannerGlow {
+  0%,100% { box-shadow: 0 0 0 1px rgba(59,130,246,.2), 0 8px 32px rgba(0,0,0,.6), 0 0 60px rgba(59,130,246,.1); }
+  50%      { box-shadow: 0 0 0 1px rgba(59,130,246,.4), 0 8px 40px rgba(0,0,0,.7), 0 0 80px rgba(59,130,246,.22); }
+}
+body.dark .banner { animation: bannerGlow 4s ease-in-out infinite; }
+
+/* Switchers */
+.switchers {
+  display: flex; gap: 14px; margin: 10px 0 12px;
+  flex-wrap: wrap; align-items: center;
+}
+.switch { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); }
+.switch .label-text { font-size: 13px; color: var(--muted); }
+.toggle {
+  width: 34px; height: 18px; border-radius: 999px;
+  background: #cbd5e1; position: relative;
+  display: inline-block; cursor: pointer;
+  transition: background .18s;
+}
+.toggle .knob {
+  position: absolute; top: 2px; left: 2px;
+  width: 14px; height: 14px; border-radius: 50%;
+  background: #fff; transition: transform .18s;
+  box-shadow: 0 1px 3px rgba(0,0,0,.15);
+}
+.toggle.on { background: var(--accent); }
+.toggle.on .knob { transform: translateX(16px); }
+
+/* Container */
+.container {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 16px;
+  box-shadow: 0 4px 20px rgba(15,23,36,.06);
+  border: 1px solid var(--border);
+  transition: background .25s, border .25s;
+}
+
+/* Search row */
+.search-row {
+  position: relative;
+  margin-bottom: 14px;
+}
+.search-box {
+  width: 100%; padding: 11px 42px 11px 14px;
+  background: var(--bg); color: inherit;
+  border: 1.5px solid var(--border);
+  border-radius: 8px; font-size: 14px;
+  transition: border-color .2s, background .25s;
+  outline: none;
+}
+.search-box:focus { border-color: var(--accent); background: var(--card); }
+.search-box::placeholder { color: var(--muted); }
+.search-clear {
+  position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+  background: none; border: none; cursor: pointer;
+  color: var(--muted); font-size: 18px; line-height: 1;
+  padding: 2px 4px; display: none; transition: color .15s;
+}
+.search-clear:hover { color: var(--accent); }
+.search-clear.visible { display: block; }
+
+/* Tabs row */
+.tabs-row {
+  display: flex; flex-direction: column;
+  gap: 8px; margin-bottom: 18px;
+}
+
+/* Segmented control */
+.tabs {
+  display: flex; flex: 1; min-width: 0;
+  background: var(--seg-bg, #e5e7eb);
+  border-radius: 10px; padding: 3px;
+  gap: 0; width: 100%;
+}
+:root { --seg-bg: #e5e7eb; }
+body.dark { --seg-bg: #1e1e2e; }
+
+.tab {
+  flex: 1; min-width: 0;
+  padding: 9px 8px;
+  background: transparent; cursor: pointer;
+  border-radius: 8px; border: none;
+  transition: background .2s, color .2s, box-shadow .2s;
+  font-size: 13px; font-weight: 500;
+  color: var(--muted); white-space: nowrap;
+  text-align: center; position: relative;
+  overflow: hidden; text-overflow: ellipsis;
+}
+.tab:hover:not(.active) { color: var(--accent); }
+
+/* Active state — light */
+.tab.active {
+  background: #fff;
+  color: var(--accent);
+  box-shadow: 0 1px 6px rgba(0,0,0,.12), 0 0 0 1px rgba(0,0,0,.06);
+}
+
+/* Active state — dark */
+body.dark .tab.active {
+  background: linear-gradient(135deg, #1d3461 0%, #1e3a8a 100%);
+  color: #93c5fd;
+  box-shadow: 0 0 0 1px rgba(59,130,246,.3), 0 2px 12px rgba(59,130,246,.2);
+}
+
+.tab .count {
+  display: inline-block; margin-left: 6px;
+  font-size: 11px; font-weight: 600;
+  background: rgba(0,0,0,.07);
+  border-radius: 999px; padding: 1px 7px;
+  vertical-align: middle; transition: background .2s, color .2s;
+}
+.tab.active .count {
+  background: rgba(11,87,208,.12);
+  color: var(--accent);
+}
+body.dark .tab.active .count {
+  background: rgba(59,130,246,.2);
+  color: #93c5fd;
+}
+body.dark .tab:not(.active) .count {
+  background: rgba(255,255,255,.07);
+  color: var(--muted);
+}
+
+
+/* Empty state */
+.empty-state {
+  text-align: center; padding: 48px 16px;
+  color: var(--muted); display: none;
+}
+.empty-state .empty-icon { font-size: 40px; margin-bottom: 12px; }
+.empty-state p { font-size: 14px; margin: 4px 0; }
+.empty-state .empty-q { font-weight: 600; color: inherit; }
+
+/* Group separator */
+.group-sep {
+  font-size: 11px; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--group-label);
+  padding: 8px 4px 6px; margin-top: 6px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 12px;
+}
+.group-sep:first-child { margin-top: 0; }
+
+/* Card view */
+.card-view { display: none; }
+
+/* Fade-in for cards */
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 16px; margin-bottom: 12px;
+  box-shadow: 0 2px 12px rgba(15,23,36,.04);
+  transition: transform .2s, box-shadow .2s, border-color .2s;
+  animation: cardIn .2s ease both;
+  position: relative; overflow: hidden;
+}
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(15,23,36,.09);
+  border-color: var(--accent);
+}
+
+/* NEW badge */
+.badge-new {
+  position: absolute; top: 12px; right: 12px;
+  background: var(--new-bg); color: var(--new-color);
+  font-size: 10px; font-weight: 700; letter-spacing: .06em;
+  padding: 2px 8px; border-radius: 999px;
+  text-transform: uppercase;
+}
+
+.card .file {
+  font-size: 16px; font-weight: 700; margin-bottom: 10px;
+  color: var(--accent); padding-right: 52px;
+}
+.card .hash-row {
+  display: flex; align-items: flex-start; gap: 6px; margin-bottom: 8px;
+}
+.card .hash-label { font-size: 12px; color: var(--muted); margin-bottom: 4px; }
+.card .hash-wrap { flex: 1; min-width: 0; }
+.card .hash {
+  font-size: 12px; font-family: 'Courier New', monospace;
+  word-break: break-all; background: var(--hash-bg);
+  padding: 7px 10px; border-radius: 6px;
+  line-height: 1.5;
+}
+.copy-btn {
+  flex: 0 0 auto; margin-top: 18px;
+  background: var(--copy-bg); border: 1px solid var(--border);
+  border-radius: 6px; padding: 5px 9px;
+  font-size: 13px; cursor: pointer; color: var(--muted);
+  transition: all .15s; line-height: 1; white-space: nowrap;
+}
+.copy-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+.copy-btn.copied { background: #16a34a; color: #fff; border-color: #16a34a; }
+
+.card .size { font-size: 13px; color: var(--muted); margin-bottom: 12px; }
+.btn-group {
+  display: flex; margin-top: 4px;
+  background: var(--seg-bg, #e5e7eb);
+  border-radius: 10px; padding: 3px; gap: 0;
+}
+.download-btn, .mirror-btn {
+  flex: 1; min-width: 0;
+  padding: 8px 8px;
+  background: transparent; cursor: pointer;
+  border-radius: 8px; border: none;
+  transition: background .2s, color .2s, box-shadow .2s;
+  font-size: 13px; font-weight: 500;
+  color: var(--muted); white-space: nowrap;
+  text-align: center; text-decoration: none;
+  display: inline-flex; align-items: center; justify-content: center; gap: 5px;
+}
+.download-btn:hover, .mirror-btn:hover { color: var(--accent); }
+.download-btn.active {
+  background: #fff;
+  color: var(--accent);
+  box-shadow: 0 1px 6px rgba(0,0,0,.12), 0 0 0 1px rgba(0,0,0,.06);
+}
+body.dark .download-btn.active {
+  background: linear-gradient(135deg, #1d3461 0%, #1e3a8a 100%);
+  color: #93c5fd;
+  box-shadow: 0 0 0 1px rgba(59,130,246,.3), 0 2px 12px rgba(59,130,246,.2);
+}
+.mirror-btn.active {
+  background: #fff;
+  color: var(--accent);
+  box-shadow: 0 1px 6px rgba(0,0,0,.12), 0 0 0 1px rgba(0,0,0,.06);
+}
+body.dark .mirror-btn.active {
+  background: linear-gradient(135deg, #1d3461 0%, #1e3a8a 100%);
+  color: #93c5fd;
+  box-shadow: 0 0 0 1px rgba(59,130,246,.3), 0 2px 12px rgba(59,130,246,.2);
+}
+
+/* Footer */
+.footer {
+  font-size: 12px; color: var(--muted);
+  margin-top: 20px; border-top: 1px dashed var(--border);
+  padding-top: 14px; text-align: center;
+}
+.footer a { color: var(--accent); text-decoration: none; }
+.footer a:hover { text-decoration: underline; }
+.footer p { margin: 4px 0; }
+
+/* =============================================
+   RESPONSIVE LAYOUT SYSTEM
+   Base = mobile-first.
+   .pc-mode = forced wide layout (manual toggle).
+   .mobile-mode = forced narrow layout.
+   Media queries handle automatic breakpoints
+   unless a forced class overrides them.
+   ============================================= */
+
+/* --- Base (mobile, <480px) --- */
+.card-view { display: block; }
+
+/* --- Small tablet and up (≥480px) --- */
+@media (min-width: 480px) {
+  .tabs-row { flex-direction: row; align-items: center; }
+  .tabs { flex: 1; width: auto; }
+}
+
+/* --- Tablet and up (≥640px) --- */
+@media (min-width: 640px) {
+  body { padding: 20px; }
+  .banner { padding: 24px 28px 22px; }
+  .banner h1 { font-size: 22px; }
+}
+
+/* --- Desktop (≥900px) --- */
+@media (min-width: 900px) {
+  body { padding: 24px; }
+
+  /* Grid cards */
+  .card-view {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 14px;
+    align-items: start;
+  }
+  .card { margin-bottom: 0; display: flex; flex-direction: column; }
+  .btn-group { margin-top: auto; }
+  .group-sep { grid-column: 1 / -1; }
+
+  /* Tabs row horizontal */
+  .tabs-row { flex-direction: row; align-items: center; }
+  .tabs { flex: 0 0 auto; width: auto; min-width: 280px; }
+
+  /* Banner wider */
+  .banner { padding: 26px 32px 24px; }
+  .banner::after { font-size: 160px; right: 100px; }
+  .banner-stats { display: flex; }
+}
+
+/* --- Large desktop (≥1200px) --- */
+@media (min-width: 1200px) {
+  .card-view {
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  }
+}
+
+/* ---- FORCED OVERRIDES (manual toggle) ---- */
+
+/* Force mobile layout regardless of screen width */
+.mobile-mode .card-view {
+  display: block !important;
+  grid-template-columns: none !important;
+}
+.mobile-mode .card { display: block !important; margin-bottom: 12px; }
+.mobile-mode .btn-group { margin-top: 4px; }
+.mobile-mode .group-sep { grid-column: auto !important; }
+.mobile-mode .tabs-row { flex-direction: column !important; }
+.mobile-mode .tabs { flex: 1 !important; width: 100% !important; min-width: 0 !important; }
+.mobile-mode .banner-stats { display: flex !important; }
+.mobile-mode .banner { padding: 22px 24px 20px !important; }
+.mobile-mode .banner::after { font-size: 120px !important; right: -10px !important; }
+
+/* Force PC layout regardless of screen width */
+.pc-mode .card-view {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)) !important;
+  gap: 14px;
+  align-items: start;
+}
+.pc-mode .card { margin-bottom: 0 !important; display: flex !important; flex-direction: column; }
+.pc-mode .btn-group { margin-top: auto; }
+.pc-mode .group-sep { grid-column: 1 / -1 !important; }
+.pc-mode .tabs-row { flex-direction: row !important; align-items: center; }
+.pc-mode .tabs { flex: 0 0 auto !important; width: auto !important; min-width: 260px; }
+.pc-mode .banner-stats { display: flex !important; }
+.pc-mode .banner { padding: 26px 32px 24px !important; }
+
+@media print {
+  body { background: white; padding: 0; color: #000; }
+  .logo, .switchers, .search-row, .tabs-row { display: none; }
+  .container { border: none; box-shadow: none; padding: 0; }
+  .card-view { display: block !important; }
+  .card { break-inside: avoid; border: 1px solid #ddd; box-shadow: none; animation: none; }
+  .badge-new { display: none; }
+}
+</style>
+</head>
+<body>
+<div class="wrapper" id="pageWrapper">
+  <div class="banner">
+    <div class="banner-inner">
+      <div class="banner-text">
+        <h1>
+          <span class="title-pill">
+            <span class="title-pill-top">
+              <span class="title-pill-main">PS5 OFW АРХИВ</span>
+            </span>
+            <span class="title-pill-divider"></span>
+            <span class="title-pill-sub">Официальные PS5 Retail и Recovery прошивки подлежащие взлому</span>
+          </span>
+        </h1>
+      </div>
+      <div class="banner-stats">
+        <div class="stat-item">
+          <span class="stat-num">45</span>
+          <span class="stat-lbl">Retail</span>
+        </div>
+        <div class="stat-sep"></div>
+        <div class="stat-item">
+          <span class="stat-num">44</span>
+          <span class="stat-lbl">Recovery</span>
+        </div>
+        <div class="stat-sep"></div>
+        <div class="stat-item">
+          <span class="stat-num">89</span>
+          <span class="stat-lbl">Всего</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="switchers" aria-hidden="false">
+    <div class="switch" title="Переключить вид: мобильная / ПК">
+      <span class="label-text">Вид</span>
+      <div id="viewToggle" class="toggle" role="switch" aria-checked="false" tabindex="0"><div class="knob"></div></div>
+    </div>
+    <div class="switch" title="Включить тёмный режим">
+      <span class="label-text">Тема</span>
+      <div id="darkToggle" class="toggle" role="switch" aria-checked="false" tabindex="0"><div class="knob"></div></div>
+    </div>
+    <div class="switch" title="Порядок сортировки">
+      <span class="label-text">↑↓</span>
+      <div id="sortToggle" class="toggle" role="switch" aria-checked="false" tabindex="0"><div class="knob"></div></div>
+    </div>
+  </div>
+
+  <div class="container" id="mainContainer">
+    <div class="search-row">
+      <input type="text" id="search" class="search-box"
+             placeholder="🔍 Поиск по версии или хешу..."
+             oninput="onSearch()">
+      <button class="search-clear" id="searchClear" onclick="clearSearch()" title="Очистить">✕</button>
+    </div>
+
+    <div class="tabs-row">
+      <div class="tabs">
+        <div class="tab active" id="tabSystem" onclick="setTab('system',this)">
+          Retail <span class="count" id="cntSystem">45</span>
+        </div>
+        <div class="tab" id="tabRecovery" onclick="setTab('recovery',this)">
+          Recovery <span class="count" id="cntRecovery">44</span>
+        </div>
+      </div>
+    </div>
+
+    <div id="cardView" class="card-view"></div>
+    <div class="empty-state" id="emptyState">
+      <div class="empty-icon">🔍</div>
+      <p>Ничего не найдено по запросу <span class="empty-q" id="emptyQ"></span></p>
+      <p style="font-size:12px">Попробуйте номер версии или часть SHA256 хеша</p>
+    </div>
+
+    <div class="footer">
+      <p><a href="https://4pda.to/forum/index.php?showtopic=1055759&view=findpost&p=140958830" target="_blank" rel="noopener">Инструкция по обновлению прошивки PS5</a></p>
+      <p>Специально для 4PDA: <a href="https://4pda.to/forum/index.php?showtopic=1055759&view=findpost&p=117795135" target="_blank" rel="noopener">Sony PlayStation 5 — Взлом</a></p>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===== System Firmware =====
+const systemFirmwares = [
+  {file:"Прошивка 04.03",original:"PS5UPDATE.PUP 04.03",sha:"d293f181b67115656f18e1b08adc937fc67f7e31bd32d4fd1d85144418de2c95",size:"871.3MB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/d293f181b67115656f18e1b08adc937fc67f7e31bd32d4fd1d85144418de2c95/PS5SYS_CRC%5B75BEFB54%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5OFW/5?comment=7"},
+  {file:"Прошивка 04.50",original:"PS5UPDATE.PUP 04.50",sha:"5a9888a72c3f34cf831dfe24671afe7868db8e17c38172d12e095d81436b1851",size:"871.6MB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/5a9888a72c3f34cf831dfe24671afe7868db8e17c38172d12e095d81436b1851/PS5SYS_CRC%5B20B95E9C%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5OFW/8?comment=9"},
+  {file:"Прошивка 04.51",original:"PS5UPDATE.PUP 04.51",sha:"c09e746990eba497d99eb20eb12b658840cadeacafa6a6b83330c848c596b4e7",size:"871.6MB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/c09e746990eba497d99eb20eb12b658840cadeacafa6a6b83330c848c596b4e7/PS5SYS_CRC%5BEEB3568B%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5OFW/9?comment=11"},
+  {file:"Прошивка 05.00",original:"PS5UPDATE.PUP 05.00",sha:"10de0a8b4663fb08050aa587abe8240859f9ad05a36f370aac9717300dc15ad3",size:"1.01GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/10de0a8b4663fb08050aa587abe8240859f9ad05a36f370aac9717300dc15ad3/PS5SYS_CRC%5B6B7A6C6A%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5OFW/10?comment=13"},
+  {file:"Прошивка 05.02",original:"PS5UPDATE.PUP 05.02",sha:"8f5af819889a046acd2e3186cfa9924d954cdb0c9a67d9863627339326088a77",size:"1.01GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/8f5af819889a046acd2e3186cfa9924d954cdb0c9a67d9863627339326088a77/PS5SYS_CRC%5BDE270E47%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5OFW/11?comment=15"},
+  {file:"Прошивка 05.10",original:"PS5UPDATE.PUP 05.10",sha:"f4c194a6ed3f1b54244c6d92a2f2fb754001b949edfbf87eb92e56b1e601cb3d",size:"1.01GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/f4c194a6ed3f1b54244c6d92a2f2fb754001b949edfbf87eb92e56b1e601cb3d/PS5SYS_CRC%5B76BEB2FF%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5OFW/12?comment=17"},
+  {file:"Прошивка 05.50",original:"PS5UPDATE.PUP 05.50",sha:"3be91a0cfa6adaf4dab5699daa57551ad7e94490a07c7ab955230cee09ed0097",size:"1.01GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/3be91a0cfa6adaf4dab5699daa57551ad7e94490a07c7ab955230cee09ed0097/PS5SYS_CRC%5B55AA6119%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5OFW/13?comment=19"},
+  {file:"Прошивка 06.00",original:"PS5UPDATE.PUP 06.00",sha:"483db451e920477813f53cec737749a791a385adabfac479764a4dc1fde7259f",size:"1.03GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/483db451e920477813f53cec737749a791a385adabfac479764a4dc1fde7259f/PS5SYS_CRC%5BBC45973B%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5OFW/14?comment=21"},
+  {file:"Прошивка 06.02",original:"PS5UPDATE.PUP 06.02",sha:"3158e8717f3aedf78d15fcc63cdd2fc0deb6a8bc026a0b8382154f5e5cf7dd6d",size:"1.03GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/3158e8717f3aedf78d15fcc63cdd2fc0deb6a8bc026a0b8382154f5e5cf7dd6d/PS5SYS_CRC%5B01C3BCC6%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5OFW/15?comment=23"},
+  {file:"Прошивка 06.50",original:"PS5UPDATE.PUP 06.50",sha:"ed547dcc63ba5667de3f301989ed611546e47ee564dbcad6accdde984a4b2e36",size:"1.04GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/ed547dcc63ba5667de3f301989ed611546e47ee564dbcad6accdde984a4b2e36/PS5SYS_CRC%5B911DC7FC%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5OFW/16?comment=25"},
+  {file:"Прошивка 07.00",original:"PS5UPDATE.PUP 07.00",sha:"a15e3912eb79ebf272e7040166e8c2f748d32775389effcd26d2b39ca522c77a",size:"1.09GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/a15e3912eb79ebf272e7040166e8c2f748d32775389effcd26d2b39ca522c77a/PS5SYS_CRC%5B7B0AF627%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5OFW/17?comment=27"},
+  {file:"Прошивка 07.01",original:"PS5UPDATE.PUP 07.01",sha:"4f978bd4545e4c08baf54afb8429766d1d52cf2f4edef78dd04fd94445bde7ed",size:"1.09GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/4f978bd4545e4c08baf54afb8429766d1d52cf2f4edef78dd04fd94445bde7ed/PS5SYS_CRC%5B381AF4EA%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5OFW/18?comment=29"},
+  {file:"Прошивка 07.01",original:"PS5UPDATE.PUP 07.01",sha:"c69b331751b9e2737f5a6d988a03ec3232f2a97b71c12dabee56d3203ccfb3a5",size:"1.09GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/c69b331751b9e2737f5a6d988a03ec3232f2a97b71c12dabee56d3203ccfb3a5/PS5SYS_CRC%5BAE13FB79%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5OFW/19?comment=31"},
+  {file:"Прошивка 07.20",original:"PS5UPDATE.PUP 07.20",sha:"310b2d495e0b2dd7dc1950d63a15ce0d6fe509dc93a93781eb52ed2dd073a286",size:"1.10GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/310b2d495e0b2dd7dc1950d63a15ce0d6fe509dc93a93781eb52ed2dd073a286/PS5SYS_CRC%5B2DBD417B%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5OFW/20?comment=33"},
+  {file:"Прошивка 07.40",original:"PS5UPDATE.PUP 07.40",sha:"1f12b41a34b71efb123c9125ce1c0cdf6fcc5e245d0fb2937a1c0816507d4837",size:"1.10GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/1f12b41a34b71efb123c9125ce1c0cdf6fcc5e245d0fb2937a1c0816507d4837/PS5SYS_CRC%5B8F037784%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5OFW/21?comment=35"},
+  {file:"Прошивка 07.60",original:"PS5UPDATE.PUP 07.60",sha:"95c2f7a857610ff6b0549c5de86dbe64355473c89f41bd9b4314a82410616e15",size:"1.10GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/95c2f7a857610ff6b0549c5de86dbe64355473c89f41bd9b4314a82410616e15/PS5SYS_CRC%5B803D5745%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5OFW/22?comment=37"},
+  {file:"Прошивка 07.61",original:"PS5UPDATE.PUP 07.61",sha:"89acf5eac7b809791b806d58f07165660450a19f39cb974f4431ca21e2065b23",size:"1.10GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/89acf5eac7b809791b806d58f07165660450a19f39cb974f4431ca21e2065b23/PS5SYS_CRC%5B3676D206%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5OFW/23?comment=39"},
+  {file:"Прошивка 08.00",original:"PS5UPDATE.PUP 08.00",sha:"37709b2dd68af7de60d516b57918b378c2853b2096622a5ad4e4ab0f4ce90e19",size:"1.12GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/37709b2dd68af7de60d516b57918b378c2853b2096622a5ad4e4ab0f4ce90e19/PS5SYS_CRC%5B3DBF0E64%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5OFW/25?comment=42"},
+  {file:"Прошивка 08.20",original:"PS5UPDATE.PUP 08.20",sha:"c24e834db0f461ce81f312b1385702d0fc3f9825fdb551aaaec8fccf8e7f0872",size:"1.13GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/c24e834db0f461ce81f312b1385702d0fc3f9825fdb551aaaec8fccf8e7f0872/PS5SYS_CRC%5BF12A8936%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5OFW/26?comment=44"},
+  {file:"Прошивка 08.20",original:"PS5UPDATE.PUP 08.20",sha:"ca0e786eb8e1ce9e478f43cfa56e842ad662c6f897dde8fd7ae7427f396ea09e",size:"1.13GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/ca0e786eb8e1ce9e478f43cfa56e842ad662c6f897dde8fd7ae7427f396ea09e/PS5SYS_CRC%5BBCDA4854%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5OFW/27?comment=46"},
+  {file:"Прошивка 08.40",original:"PS5UPDATE.PUP 08.40",sha:"fd912da831ef38e44065a4919147324dcdd032c63a0a3cc06fd160ccbd1dc2f1",size:"1.13GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/fd912da831ef38e44065a4919147324dcdd032c63a0a3cc06fd160ccbd1dc2f1/PS5SYS_CRC%5B58385B21%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5OFW/28?comment=48"},
+  {file:"Прошивка 08.60",original:"PS5UPDATE.PUP 08.60",sha:"c80ae46b7aa2e7bb5d4bc46bab95479bf4da11f3ad5c6ace50b239cf243861a2",size:"1.13GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/c80ae46b7aa2e7bb5d4bc46bab95479bf4da11f3ad5c6ace50b239cf243861a2/PS5SYS_CRC%5B70020D6A%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5OFW/29?comment=50"},
+  {file:"Прошивка 09.00",original:"PS5UPDATE.PUP 09.00",sha:"e061c9c8bf711202afd13da7f7ea76729a5708e572788bee9e0cbe5d40f70d28",size:"1.13GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/e061c9c8bf711202afd13da7f7ea76729a5708e572788bee9e0cbe5d40f70d28/PS5SYS_CRC%5B5B9EE594%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5OFW/30?comment=52"},
+  {file:"Прошивка 09.20",original:"PS5UPDATE.PUP 09.20",sha:"375619c7da0b4aa5868a13c09b5d120afd7a53e3eb1ba29a35d7d8b59179e318",size:"1.13GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/375619c7da0b4aa5868a13c09b5d120afd7a53e3eb1ba29a35d7d8b59179e318/PS5SYS_CRC%5BDC925CB6%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5OFW/31?comment=54"},
+  {file:"Прошивка 09.40",original:"PS5UPDATE.PUP 09.40",sha:"e631e06cd1d884ca2692158449b9d89924e88e91ed82fc15e87c1abb0a401e0e",size:"1.13GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/e631e06cd1d884ca2692158449b9d89924e88e91ed82fc15e87c1abb0a401e0e/PS5SYS_CRC%5B9C32D157%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5OFW/32?comment=56"},
+  {file:"Прошивка 09.60",original:"PS5UPDATE.PUP 09.60",sha:"2db810ab78ea92aafef8c0202993a924274d53049c3de0e25f983188acc8b2a3",size:"1.14GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/2db810ab78ea92aafef8c0202993a924274d53049c3de0e25f983188acc8b2a3/PS5SYS_CRC%5BAAF240CF%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5OFW/33?comment=58"},
+  {file:"Прошивка 10.00",original:"PS5UPDATE.PUP 10.00",sha:"47bc4bcd8323c0c5db14c333da84a1c572279df727e32cd421f478233c5b0c73",size:"1.23GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/47bc4bcd8323c0c5db14c333da84a1c572279df727e32cd421f478233c5b0c73/PS5SYS_CRC%5BD7478C84%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5OFW/34?comment=60"},
+  {file:"Прошивка 10.01",original:"PS5UPDATE.PUP 10.01",sha:"f6724d78a4965c170575a7485d1e20bd7e4001457829f98a978e8ec73acdfa6e",size:"1.23GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/f6724d78a4965c170575a7485d1e20bd7e4001457829f98a978e8ec73acdfa6e/PS5SYS_CRC%5B0FFBDFCE%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5OFW/35?comment=62"},
+  {file:"Прошивка 10.20",original:"PS5UPDATE.PUP 10.20",sha:"811dc7f53ee6c710dd6725ae0be286436e1ee3df44416d8feaeb8cf17c80a646",size:"1.23GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/811dc7f53ee6c710dd6725ae0be286436e1ee3df44416d8feaeb8cf17c80a646/PS5SYS_CRC%5BC32C2AC6%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5OFW/38?comment=85"},
+  {file:"Прошивка 10.40",original:"PS5UPDATE.PUP 10.40",sha:"552129eff6730cd7e299a599c5266320ad34a08938e01819278caf9af4e1fe69",size:"1.23GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/552129eff6730cd7e299a599c5266320ad34a08938e01819278caf9af4e1fe69/PS5SYS_CRC%5B60568352%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5OFW/39?comment=87"},
+  {file:"Прошивка 10.60",original:"PS5UPDATE.PUP 10.60",sha:"9a3d95a30af44b01b93649424da0f33999223571e5b5fb124b7f17e07bc70a28",size:"1.23GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/9a3d95a30af44b01b93649424da0f33999223571e5b5fb124b7f17e07bc70a28/PS5SYS_CRC%5B35691E1A%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5OFW/40?comment=89"},
+  {file:"Прошивка 11.00",original:"PS5UPDATE.PUP 11.00",sha:"eb42370180bdec9756b06bb577ca200906d257a7362cec410cf913fb3421b75c",size:"1.25GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/eb42370180bdec9756b06bb577ca200906d257a7362cec410cf913fb3421b75c/PS5SYS_CRC%5B02B57CCB%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5OFW/41?comment=91"},
+  {file:"Прошивка 11.20",original:"PS5UPDATE.PUP 11.20",sha:"2665f1d28bd82cd2baa6bd57c291c460a6155e6e4437a3cc2f77708682c0e26d",size:"1.24GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/2665f1d28bd82cd2baa6bd57c291c460a6155e6e4437a3cc2f77708682c0e26d/PS5SYS_CRC%5B6E10BEF9%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5OFW/42?comment=93"},
+  {file:"Прошивка 11.40",original:"PS5UPDATE.PUP 11.40",sha:"c81ab2031ccdaec9c83dcb1918d5051e3c6e988a5c6dba135cf238aa944072ed",size:"1.25GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/c81ab2031ccdaec9c83dcb1918d5051e3c6e988a5c6dba135cf238aa944072ed/PS5SYS_CRC%5B6A248A78%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5OFW/43?comment=95"},
+  {file:"Прошивка 12.00",original:"PS5UPDATE.PUP 12.00",sha:"5663c71b0166a03d7ab16f64b4d99311081e861b8725d347735b2095ef6a63ef",size:"1.23GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/5663c71b0166a03d7ab16f64b4d99311081e861b8725d347735b2095ef6a63ef/PS5SYS_CRC%5B90EB877E%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5OFW/44?comment=97"},
+  {file:"Прошивка 12.02",original:"PS5UPDATE.PUP 12.02",sha:"2d3a2b5020a2a2d07c3390830f4a76492254efffab411edae3367a9a70679a9c",size:"1.23GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/2d3a2b5020a2a2d07c3390830f4a76492254efffab411edae3367a9a70679a9c/PS5SYS_CRC%5B43D49AF4%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5OFW/45?comment=99"},
+  {file:"Прошивка 12.20",original:"PS5UPDATE.PUP 12.20",sha:"83fbc791b7747e389762d68011b17c70ebbd4497a1d7cec0a947b9bdb833710e",size:"1.23GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/83fbc791b7747e389762d68011b17c70ebbd4497a1d7cec0a947b9bdb833710e/PS5SYS_CRC%5B3700E020%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5OFW/46?comment=101"},
+  {file:"Прошивка 12.40",original:"PS5UPDATE.PUP 12.40",sha:"e92a2bcea4326bcb95e8684bac87cca2ccfaa8274770428e5fe511ba0bab50ef",size:"1.23GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/e92a2bcea4326bcb95e8684bac87cca2ccfaa8274770428e5fe511ba0bab50ef/PS5SYS_CRC%5B4E4BADCE%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5OFW/47?comment=103"},
+  {file:"Прошивка 12.60",original:"PS5UPDATE.PUP 12.60",sha:"f9e9edd874b664e9dfd700b80565d9440b1628989ae3ccc9008ce99b313454d2",size:"1.23GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/f9e9edd874b664e9dfd700b80565d9440b1628989ae3ccc9008ce99b313454d2/PS5SYS_CRC%5B6D4669C3%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5OFW/48?comment=105"},
+  {file:"Прошивка 12.70",original:"PS5UPDATE.PUP 12.70",sha:"9cd976c7df65387d329e426ffeec73c3169501c8ad3e7ab9e32adfe1f3be5a2b",size:"1.23GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/9cd976c7df65387d329e426ffeec73c3169501c8ad3e7ab9e32adfe1f3be5a2b/PS5SYS_CRC%5B9CAF8FEA%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5OFW/49?comment=107"},
+  {file:"Прошивка 13.00",original:"PS5UPDATE.PUP 13.00",sha:"f0bd8acbb15afa5b1274334c0725d13d114a0daba1c864929d7ca1508870e8db",size:"1.16GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/f0bd8acbb15afa5b1274334c0725d13d114a0daba1c864929d7ca1508870e8db/PS5SYS_CRC%5BC986F25C%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5OFW/50?comment=109"},
+  {file:"Прошивка 13.20",original:"PS5UPDATE.PUP 13.20",sha:"a69f5ddf3b0f963407f4d2a9abf0968061e9865571cd0c84631d262c7201f806",size:"1.16GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/a69f5ddf3b0f963407f4d2a9abf0968061e9865571cd0c84631d262c7201f806/PS5SYS_CRC%5BD2B8EF4C%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5OFW/51?comment=111"},
+  {file:"Прошивка 13.40",original:"PS5UPDATE.PUP 13.40",sha:"cbb5d442ffccb746f1b607631ea58c16becf9be99dd21fbfa19fe94cf79a6d5c",size:"1.16GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/cbb5d442ffccb746f1b607631ea58c16becf9be99dd21fbfa19fe94cf79a6d5c/PS5SYS_CRC%5BD122789B%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5OFW/52?comment=113"},
+  {file:"Прошивка 13.42",original:"PS5UPDATE.PUP 13.42",sha:"6b353c7716ad050c2f98342b8e54f309dcc21cfb239ed1fb7d6c3a3bb6842f96",size:"1.16GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/6b353c7716ad050c2f98342b8e54f309dcc21cfb239ed1fb7d6c3a3bb6842f96/PS5SYS_CRC%5B0F3AB9E6%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5OFW/53?comment=115"},
+  {file:"Прошивка 13.60",original:"PS5UPDATE.PUP 13.60",sha:"767a94eac034d33907a6ff57af05bc30ce057258ad1cf4b5ffb75d5e21112561",size:"1.16GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/767a94eac034d33907a6ff57af05bc30ce057258ad1cf4b5ffb75d5e21112561/PS5SYS_CRC%5B1968AB46%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5OFW/54?comment=117"}
+];
+
+// ===== Recovery Firmware =====
+const recoveryFirmwares = [
+  {file:"Прошивка 04.03",original:"PS5UPDATE.PUP 04.03",sha:"e947874a2c2e496e4dda163179f04891ee5300c5036a39d8ad928faddb3f0368",size:"1.01GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/e947874a2c2e496e4dda163179f04891ee5300c5036a39d8ad928faddb3f0368/PS5REC_CRC%5BC7C55A24%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5ROFW/3?comment=4"},
+  {file:"Прошивка 04.50",original:"PS5UPDATE.PUP 04.50",sha:"6867d2bb99a8369a98e4129dae937d611618466ae700e5bc52e1c365dca0a7c6",size:"1.01GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/6867d2bb99a8369a98e4129dae937d611618466ae700e5bc52e1c365dca0a7c6/PS5REC_CRC%5B575B5CA4%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5ROFW/4?comment=6"},
+  {file:"Прошивка 04.51",original:"PS5UPDATE.PUP 04.51",sha:"3847a9b0037011b1909e11280b212bf82e5e64d038f1f28a9a39ada50fb148b8",size:"1.01GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/3847a9b0037011b1909e11280b212bf82e5e64d038f1f28a9a39ada50fb148b8/PS5REC_CRC%5BF0A2A4F0%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5ROFW/5?comment=8"},
+  {file:"Прошивка 05.00",original:"PS5UPDATE.PUP 05.00",sha:"028896220519726f78007ef3b9c7cd2e4df67f87babe533f61e908569220084f",size:"1.15GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/028896220519726f78007ef3b9c7cd2e4df67f87babe533f61e908569220084f/PS5REC_CRC%5B6FBCBF0A%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5ROFW/6?comment=10"},
+  {file:"Прошивка 05.02",original:"PS5UPDATE.PUP 05.02",sha:"67db0571283561fc1e348c42070ae4b8f7c658ffb1c723616497f8d791311c89",size:"1.15GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/67db0571283561fc1e348c42070ae4b8f7c658ffb1c723616497f8d791311c89/PS5REC_CRC%5BF8B74D00%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5ROFW/7?comment=12"},
+  {file:"Прошивка 05.10",original:"PS5UPDATE.PUP 05.10",sha:"2dfb283635f849a80d32d2b83fa3ba7af00518bdb9a2f6567a1e3566e4f0131d",size:"1.15GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/2dfb283635f849a80d32d2b83fa3ba7af00518bdb9a2f6567a1e3566e4f0131d/PS5REC_CRC%5BFD152F12%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5ROFW/8?comment=14"},
+  {file:"Прошивка 05.50",original:"PS5UPDATE.PUP 05.50",sha:"777ce352ff323f6bd88176511fae35e816c53b8c94b19862c2e6364e9a719e69",size:"1.15GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/777ce352ff323f6bd88176511fae35e816c53b8c94b19862c2e6364e9a719e69/PS5REC_CRC%5B21D458C2%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5ROFW/9?comment=16"},
+  {file:"Прошивка 06.00",original:"PS5UPDATE.PUP 06.00",sha:"57dbf8d0682930da5b77096d8f321a55f5f7aabb8ed8ffdf8fef1feed6a15df3",size:"1.17GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/57dbf8d0682930da5b77096d8f321a55f5f7aabb8ed8ffdf8fef1feed6a15df3/PS5REC_CRC%5BD6A5579A%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5ROFW/10?comment=18"},
+  {file:"Прошивка 06.02",original:"PS5UPDATE.PUP 06.02",sha:"9e83cc5fc03208a00e24e1b19bc40120aef5df959abf26c61f59a28816b34f79",size:"1.17GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/9e83cc5fc03208a00e24e1b19bc40120aef5df959abf26c61f59a28816b34f79/PS5REC_CRC%5B7B0A4C42%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5ROFW/11?comment=20"},
+  {file:"Прошивка 06.50",original:"PS5UPDATE.PUP 06.50",sha:"51e1fc2bda51aa09d5f582fe33d00c7a3cac96d659a2f38653e7783fb64089a2",size:"1.18GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/51e1fc2bda51aa09d5f582fe33d00c7a3cac96d659a2f38653e7783fb64089a2/PS5REC_CRC%5B940BB763%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5ROFW/12?comment=22"},
+  {file:"Прошивка 07.00",original:"PS5UPDATE.PUP 07.00",sha:"c76a98d0421d7487f7ffb6ed865cbb30cd7656f4eb951669bdb365fa4008c99c",size:"1.23GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/c76a98d0421d7487f7ffb6ed865cbb30cd7656f4eb951669bdb365fa4008c99c/PS5REC_CRC%5B103521FA%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5ROFW/13?comment=24"},
+  {file:"Прошивка 07.01",original:"PS5UPDATE.PUP 07.01",sha:"eec886d33263cc8da792cc1b61100a3cc181472bd551cdc7ec7d5134af66212b",size:"1.23GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/eec886d33263cc8da792cc1b61100a3cc181472bd551cdc7ec7d5134af66212b/PS5REC_CRC%5BDF35FD0F%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5ROFW/14?comment=26"},
+  {file:"Прошивка 07.01",original:"PS5UPDATE.PUP 07.01",sha:"9dbf86268a00d3b69f4d1886357dc92154d823b74af72a1a54cdb71bf5e78e01",size:"1.23GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/9dbf86268a00d3b69f4d1886357dc92154d823b74af72a1a54cdb71bf5e78e01/PS5REC_CRC%5B24908CDA%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5ROFW/15?comment=28"},
+  {file:"Прошивка 07.20",original:"PS5UPDATE.PUP 07.20",sha:"b7bbb477e92bfcc8a2d28538c1f2e6e266faea7b70cceaa7af667907dedbabac",size:"1.24GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/b7bbb477e92bfcc8a2d28538c1f2e6e266faea7b70cceaa7af667907dedbabac/PS5REC_CRC%5BA03B225B%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5ROFW/16?comment=30"},
+  {file:"Прошивка 07.40",original:"PS5UPDATE.PUP 07.40",sha:"7cd1f9bfc793f1e4e0642d68ef65e6c4875920b592b0bfe95dd48c1ce0501a4c",size:"1.24GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/7cd1f9bfc793f1e4e0642d68ef65e6c4875920b592b0bfe95dd48c1ce0501a4c/PS5REC_CRC%5B4B7A5CD6%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5ROFW/17?comment=32"},
+  {file:"Прошивка 07.60",original:"PS5UPDATE.PUP 07.60",sha:"36b5952cb0c87a84331a4b079cb19f9795abbe9fd0775741e0a859f03781d546",size:"1.24GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/36b5952cb0c87a84331a4b079cb19f9795abbe9fd0775741e0a859f03781d546/PS5REC_CRC%5BF6737510%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5ROFW/18?comment=34"},
+  {file:"Прошивка 07.61",original:"PS5UPDATE.PUP 07.61",sha:"3fa89196df567deb38a063beccbd51de257fff884c5a61b9c3f94bba6593fd3a",size:"1.24GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/3fa89196df567deb38a063beccbd51de257fff884c5a61b9c3f94bba6593fd3a/PS5REC_CRC%5B98023C51%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5ROFW/19?comment=36"},
+  {file:"Прошивка 08.00",original:"PS5UPDATE.PUP 08.00",sha:"b9a50dae3c064e523893ff3c8db7d43b27366054e8bc9d1e962758b9b1e45b8d",size:"1.26GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/b9a50dae3c064e523893ff3c8db7d43b27366054e8bc9d1e962758b9b1e45b8d/PS5REC_CRC%5B16FC713C%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5ROFW/20?comment=38"},
+  {file:"Прошивка 08.20",original:"PS5UPDATE.PUP 08.20",sha:"90a59e36dc7fbe3795accb628b8a2a5b7363935d73f070fcc33349f5615188a3",size:"1.27GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/90a59e36dc7fbe3795accb628b8a2a5b7363935d73f070fcc33349f5615188a3/PS5REC_CRC%5BFDD64F6F%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5ROFW/21?comment=40"},
+  {file:"Прошивка 08.20",original:"PS5UPDATE.PUP 08.20",sha:"68f505d4fd98812a54a2781059272adcc93f4a13ebcd2aa8ed90606ec67a1017",size:"1.27GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/68f505d4fd98812a54a2781059272adcc93f4a13ebcd2aa8ed90606ec67a1017/PS5REC_CRC%5BFCE72CC9%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5ROFW/22?comment=42"},
+  {file:"Прошивка 08.40",original:"PS5UPDATE.PUP 08.40",sha:"50c367f7d9b66b4545c0454f34760d954d59409681368b95fc15604fd5be9208",size:"1.27GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/50c367f7d9b66b4545c0454f34760d954d59409681368b95fc15604fd5be9208/PS5REC_CRC%5BF6D5290D%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5ROFW/23?comment=44"},
+  {file:"Прошивка 08.60",original:"PS5UPDATE.PUP 08.60",sha:"0f819dd767699ccaffe2b5ba277578b07a283f39ec8b57dd4dc24c47e7bf01aa",size:"1.27GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/0f819dd767699ccaffe2b5ba277578b07a283f39ec8b57dd4dc24c47e7bf01aa/PS5REC_CRC%5B8AE42FD5%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5ROFW/24?comment=46"},
+  {file:"Прошивка 09.00",original:"PS5UPDATE.PUP 09.00",sha:"9a4be7beadb702f5dcf65fd4f360af985d61b938f8d2c11bf0f689b8868325e6",size:"1.27GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/9a4be7beadb702f5dcf65fd4f360af985d61b938f8d2c11bf0f689b8868325e6/PS5REC_CRC%5B2E382FAB%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5ROFW/25?comment=48"},
+  {file:"Прошивка 09.40",original:"PS5UPDATE.PUP 09.40",sha:"adfb7f85f7d41a9017423465e56f589afecce71fdbab51ed5c54eca6ee33e20a",size:"1.28GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/adfb7f85f7d41a9017423465e56f589afecce71fdbab51ed5c54eca6ee33e20a/PS5REC_CRC%5B9609AC11%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5ROFW/26?comment=50"},
+  {file:"Прошивка 09.60",original:"PS5UPDATE.PUP 09.60",sha:"818b97764b2e838269cf49f53070d1472559c576daa002bf134ddfaec459364e",size:"1.28GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/818b97764b2e838269cf49f53070d1472559c576daa002bf134ddfaec459364e/PS5REC_CRC%5BEBFA4B89%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5ROFW/27?comment=52"},
+  {file:"Прошивка 10.00",original:"PS5UPDATE.PUP 10.00",sha:"86d0aedf9512596bbe30a312165fed4caac37109469a63cd99d20514d5fbcb7f",size:"1.38GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/86d0aedf9512596bbe30a312165fed4caac37109469a63cd99d20514d5fbcb7f/PS5REC_CRC%5B0D82E943%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5ROFW/28?comment=54"},
+  {file:"Прошивка 10.01",original:"PS5UPDATE.PUP 10.01",sha:"083f2efd3c379c68a1a1b87691ffce7622fe72617793fd7242ab57b3c81d55c6",size:"1.38GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/083f2efd3c379c68a1a1b87691ffce7622fe72617793fd7242ab57b3c81d55c6/PS5REC_CRC%5BB4A87FAD%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5ROFW/29?comment=56"},
+  {file:"Прошивка 10.20",original:"PS5UPDATE.PUP 10.20",sha:"7e26df04622a307981c6233012f1c852cee9376f28af2a5c2a2f7489f6e6133a",size:"1.37GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/7e26df04622a307981c6233012f1c852cee9376f28af2a5c2a2f7489f6e6133a/PS5REC_CRC%5BDBE18E51%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5ROFW/30?comment=64"},
+  {file:"Прошивка 10.40",original:"PS5UPDATE.PUP 10.40",sha:"20697d8358c2748bbb4b73e6b7b98480ea606147a7263e26fba15efd9b9d350a",size:"1.37GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/20697d8358c2748bbb4b73e6b7b98480ea606147a7263e26fba15efd9b9d350a/PS5REC_CRC%5B9AC24471%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5ROFW/31?comment=66"},
+  {file:"Прошивка 10.60",original:"PS5UPDATE.PUP 10.60",sha:"5b2445b04d9c3f351d97f4c98f473c55aa2928f6e7f07aaf0037a4973c89c584",size:"1.37GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/5b2445b04d9c3f351d97f4c98f473c55aa2928f6e7f07aaf0037a4973c89c584/PS5REC_CRC%5BEB447FA5%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5ROFW/32?comment=68"},
+  {file:"Прошивка 11.00",original:"PS5UPDATE.PUP 11.00",sha:"08c114e9aec14cea145adb6275544a7923b86c1681c7e9ecf03afb18d23bd58b",size:"1.4GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/08c114e9aec14cea145adb6275544a7923b86c1681c7e9ecf03afb18d23bd58b/PS5REC_CRC%5B7630C284%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5ROFW/33?comment=70"},
+  {file:"Прошивка 11.20",original:"PS5UPDATE.PUP 11.20",sha:"f356b19c8b6a332265caa57b3ea833976e10b79ce7c618f0e18bfad4eb6eb4b3",size:"1.39GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/f356b19c8b6a332265caa57b3ea833976e10b79ce7c618f0e18bfad4eb6eb4b3/PS5REC_CRC%5B817DBBC2%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5ROFW/34?comment=72"},
+  {file:"Прошивка 11.40",original:"PS5UPDATE.PUP 11.40",sha:"7346103eac7e5af3b2069a0a0644432e1c150637c88b6738c9c5e8f973c7530e",size:"1.39GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/7346103eac7e5af3b2069a0a0644432e1c150637c88b6738c9c5e8f973c7530e/PS5REC_CRC%5B57E31714%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5ROFW/35?comment=74"},
+  {file:"Прошивка 12.00",original:"PS5UPDATE.PUP 12.00",sha:"59963ffc6d7aff071247c5317607dfad8baf33049e963f910ee0d94759ed576c",size:"1.37GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/59963ffc6d7aff071247c5317607dfad8baf33049e963f910ee0d94759ed576c/PS5REC_CRC%5BD375042C%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5ROFW/36?comment=76"},
+  {file:"Прошивка 12.02",original:"PS5UPDATE.PUP 12.02",sha:"33933b0f0420fb6c6be49b7ead346a58cda9cb0ba4afa31b9ec052a54a804512",size:"1.37GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/33933b0f0420fb6c6be49b7ead346a58cda9cb0ba4afa31b9ec052a54a804512/PS5REC_CRC%5B87BBC534%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5ROFW/37?comment=78"},
+  {file:"Прошивка 12.20",original:"PS5UPDATE.PUP 12.20",sha:"132477defc395d4985b86a4ec388544424e6d67502f6ddad2a378ffe22fde35d",size:"1.37GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/132477defc395d4985b86a4ec388544424e6d67502f6ddad2a378ffe22fde35d/PS5REC_CRC%5B11932EFB%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5ROFW/38?comment=80"},
+  {file:"Прошивка 12.40",original:"PS5UPDATE.PUP 12.40",sha:"b295a7556dd0dece097554b0cfd5700bf6f8ee77200ae103d1766ec5e5fcde31",size:"1.37GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/b295a7556dd0dece097554b0cfd5700bf6f8ee77200ae103d1766ec5e5fcde31/PS5REC_CRC%5BAA015C45%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5ROFW/39?comment=82"},
+  {file:"Прошивка 12.60",original:"PS5UPDATE.PUP 12.60",sha:"0bc8588ccf4360fef9cba2ad818a2568206fb0638addc94bcb1b017b8a5f54ef",size:"1.38GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/0bc8588ccf4360fef9cba2ad818a2568206fb0638addc94bcb1b017b8a5f54ef/PS5REC_CRC%5BB45F6627%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5ROFW/40?comment=84"},
+  {file:"Прошивка 12.70",original:"PS5UPDATE.PUP 12.70",sha:"4099be6efb9c1296e160613a3ebf0a59823502e065e3c6e4ecb34cb6ea98ad2e",size:"1.38GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/4099be6efb9c1296e160613a3ebf0a59823502e065e3c6e4ecb34cb6ea98ad2e/PS5REC_CRC%5B30547D4F%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5ROFW/41?comment=86"},
+  {file:"Прошивка 13.00",original:"PS5UPDATE.PUP 13.00",sha:"5d1a9580fb91b06d601c3ff4758d1f53aed1216f56e1327c3327e34d435faef1",size:"1.31GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/5d1a9580fb91b06d601c3ff4758d1f53aed1216f56e1327c3327e34d435faef1/PS5REC_CRC%5BCC96C046%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5ROFW/42?comment=88"},
+  {file:"Прошивка 13.20",original:"PS5UPDATE.PUP 13.20",sha:"c8308c81aae91e83084259a3e6e8a67667eacf84a347303011a4790a2293b491",size:"1.31GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/c8308c81aae91e83084259a3e6e8a67667eacf84a347303011a4790a2293b491/PS5REC_CRC%5BD26983CE%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5ROFW/43?comment=90"},
+  {file:"Прошивка 13.40",original:"PS5UPDATE.PUP 13.40",sha:"2ea8374657e9addf77e6bc64ce0ef72488f2fef4dab70180d5de0ddc5ad508cb",size:"1.31GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/2ea8374657e9addf77e6bc64ce0ef72488f2fef4dab70180d5de0ddc5ad508cb/PS5REC_CRC%5B9BDE3719%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5ROFW/44?comment=92"},
+  {file:"Прошивка 13.42",original:"PS5UPDATE.PUP 13.42",sha:"a035b482f2b8a4b6fd747b425e65f7f2ed8db35aa4f7d5d1f35ba2003e6468e0",size:"1.31GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/a035b482f2b8a4b6fd747b425e65f7f2ed8db35aa4f7d5d1f35ba2003e6468e0/PS5REC_CRC%5BACB62B55%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5ROFW/45?comment=94"},
+  {file:"Прошивка 13.60",original:"PS5UPDATE.PUP 13.60",sha:"e210451f789ebe46f55b13ae049894663b796163f7b094ab993218f1cb20aa97",size:"1.31GB",link:"https://archive.midnightchannel.net/SonyPS/Firmware/download/e210451f789ebe46f55b13ae049894663b796163f7b094ab993218f1cb20aa97/PS5REC_CRC%5B6B4AC74A%5D_PS5UPDATE.PUP",mirror:"https://t.me/PS5ROFW/46?comment=96"}
+];
+
+// ===== State =====
+let currentTab = "system";
+let sortDesc = false; // false = старые внизу (по возрастанию), true = новые внизу (по убыванию)
+const NEW_COUNT = 5; // последние N версий считаются "новыми"
+
+// Группировка по мажорной версии
+function getMajor(fw) {
+  const m = fw.file.match(/(\d+)\./);
+  return m ? m[1] : '?';
+}
+
+function getGroups(list) {
+  const groups = {};
+  list.forEach((fw, idx) => {
+    const g = getMajor(fw);
+    if (!groups[g]) groups[g] = [];
+    groups[g].push({ fw, idx });
+  });
+  return groups;
+}
+
+// ===== Render =====
+function renderCurrentView() {
+  const q = document.getElementById('search').value.toLowerCase().trim();
+  const cardView = document.getElementById('cardView');
+  const emptyState = document.getElementById('emptyState');
+  const emptyQ = document.getElementById('emptyQ');
+
+  const list = currentTab === "system" ? systemFirmwares : recoveryFirmwares;
+  let filtered = list.filter(f =>
+    f.file.toLowerCase().includes(q) ||
+    f.sha.toLowerCase().includes(q) ||
+    f.size.toLowerCase().includes(q) ||
+    f.original.toLowerCase().includes(q)
+  );
+
+  // Sort: sortDesc=true → новые сверху (reverse), false → старые сверху (default)
+  if (sortDesc) filtered = [...filtered].reverse();
+
+  // Update tab counts
+  const totalSys = systemFirmwares.length;
+  const totalRec = recoveryFirmwares.length;
+  const curTotal = list.length;
+  const showCount = filtered.length;
+
+  if (currentTab === 'system') {
+    document.getElementById('cntSystem').textContent = q ? `${showCount}/${totalSys}` : totalSys;
+    document.getElementById('cntRecovery').textContent = totalRec;
+  } else {
+    document.getElementById('cntSystem').textContent = totalSys;
+    document.getElementById('cntRecovery').textContent = q ? `${showCount}/${totalRec}` : totalRec;
+  }
+
+  // Empty state
+  if (filtered.length === 0) {
+    cardView.innerHTML = '';
+    emptyQ.textContent = `"${q}"`;
+    emptyState.style.display = 'block';
+    return;
+  }
+  emptyState.style.display = 'none';
+
+  // Build HTML with group separators (only when no active search)
+  const totalLen = list.length;
+  let html = '';
+  let lastMajor = null;
+
+  filtered.forEach((fw, i) => {
+    // Original index in unsorted list (for NEW badge)
+    const origIdx = list.indexOf(fw);
+    const isNew = origIdx >= totalLen - NEW_COUNT;
+
+    const major = getMajor(fw);
+    if (!q && major !== lastMajor) {
+      html += `<div class="group-sep">Версия ${major}.xx</div>`;
+      lastMajor = major;
+    }
+
+    // Animation delay stagger
+    const delay = Math.min(i * 30, 300);
+    html += `<div class="card" style="animation-delay:${delay}ms">
+      ${isNew ? '<span class="badge-new">Новое</span>' : ''}
+      <div class="file">${fw.file}</div>
+      <div class="hash-label">SHA256 хеш:</div>
+      <div class="hash-row">
+        <div class="hash-wrap">
+          <div class="hash" id="hash-${origIdx}-${currentTab}">${fw.sha}</div>
+        </div>
+        <button class="copy-btn" onclick="copyHash(${origIdx},'${currentTab}',this)" title="Скопировать хеш">📋</button>
+      </div>
+      <div class="size">Размер: ${fw.size}</div>
+      <div class="btn-group">
+        <a class="download-btn active" href="${fw.link}" target="_blank" rel="noopener" onclick="setActiveBtn(this)">📥 Скачать</a>
+        <a class="mirror-btn" href="${fw.mirror}" target="_blank" rel="noopener" onclick="setActiveBtn(this)">🪞 Зеркало</a>
+      </div>
+    </div>`;
+  });
+
+  cardView.innerHTML = html;
+}
+
+// ===== Download segmented control =====
+function setActiveBtn(el) {
+  const group = el.closest('.btn-group');
+  group.querySelectorAll('a').forEach(a => a.classList.remove('active'));
+  el.classList.add('active');
+}
+
+// ===== Copy hash =====
+function copyHash(idx, tab, btn) {
+  const list = tab === 'system' ? systemFirmwares : recoveryFirmwares;
+  const sha = list[idx].sha;
+  navigator.clipboard.writeText(sha).then(() => {
+    btn.textContent = '✓';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = '📋'; btn.classList.remove('copied'); }, 1500);
+  }).catch(() => {
+    // Fallback for older browsers
+    const el = document.getElementById(`hash-${idx}-${tab}`);
+    const range = document.createRange();
+    range.selectNode(el);
+    window.getSelection().removeAllRanges();
+    window.getSelection().addRange(range);
+    document.execCommand('copy');
+    window.getSelection().removeAllRanges();
+    btn.textContent = '✓';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = '📋'; btn.classList.remove('copied'); }, 1500);
+  });
+}
+
+// ===== Search =====
+function onSearch() {
+  const val = document.getElementById('search').value;
+  document.getElementById('searchClear').classList.toggle('visible', val.length > 0);
+  renderCurrentView();
+}
+function clearSearch() {
+  document.getElementById('search').value = '';
+  document.getElementById('searchClear').classList.remove('visible');
+  renderCurrentView();
+  document.getElementById('search').focus();
+}
+
+// ===== Tabs =====
+function setTab(tab, el) {
+  currentTab = tab;
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  renderCurrentView();
+}
+
+// ===== Sort toggle =====
+const sortToggle = document.getElementById('sortToggle');
+function updateSortLabel() {}
+
+function toggleSort() {
+  sortDesc = !sortDesc;
+  sortToggle.classList.toggle('on', sortDesc);
+  sortToggle.setAttribute('aria-checked', sortDesc ? 'true' : 'false');
+  updateSortLabel();
+  renderCurrentView();
+}
+
+sortToggle.addEventListener('click', toggleSort);
+sortToggle.addEventListener('keydown', e => { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); toggleSort(); } });
+
+updateSortLabel();
+
+// ===== Theme & View toggles =====
+const pageWrapper = document.getElementById('pageWrapper');
+const viewToggle  = document.getElementById('viewToggle');
+const darkToggle  = document.getElementById('darkToggle');
+function updateViewLabel() {}
+function updateDarkLabel() {}
+
+// Load saved settings
+const savedDark = localStorage.getItem('darkMode');
+if (savedDark === 'true') {
+  document.body.classList.add('dark');
+  darkToggle.classList.add('on');
+  darkToggle.setAttribute('aria-checked','true');
+} else {
+  darkToggle.setAttribute('aria-checked','false');
+}
+updateDarkLabel();
+
+const savedPc = localStorage.getItem('pcMode');
+if (savedPc === 'true') {
+  pageWrapper.classList.add('pc-mode');
+  viewToggle.classList.add('on');
+  viewToggle.setAttribute('aria-checked','true');
+} else {
+  pageWrapper.classList.add('mobile-mode');
+  viewToggle.setAttribute('aria-checked','false');
+}
+updateViewLabel();
+
+function toggleView() {
+  const isOn = viewToggle.classList.toggle('on');
+  viewToggle.setAttribute('aria-checked', isOn ? 'true' : 'false');
+  pageWrapper.classList.toggle('pc-mode', isOn);
+  pageWrapper.classList.toggle('mobile-mode', !isOn);
+  localStorage.setItem('pcMode', isOn ? 'true' : 'false');
+  updateViewLabel();
+}
+function toggleDark() {
+  const isOn = darkToggle.classList.toggle('on');
+  darkToggle.setAttribute('aria-checked', isOn ? 'true' : 'false');
+  document.body.classList.toggle('dark', isOn);
+  localStorage.setItem('darkMode', isOn ? 'true' : 'false');
+  updateDarkLabel();
+}
+
+viewToggle.addEventListener('click', toggleView);
+darkToggle.addEventListener('click', toggleDark);
+[viewToggle, darkToggle].forEach(el => {
+  el.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); el.click(); }
+  });
+});
+
+// Init render
+renderCurrentView();
+</script>
+</body>
+</html>
